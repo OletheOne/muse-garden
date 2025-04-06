@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Muse Garden</title>
+    <link rel="stylesheet" href="public/css/style.css">
+    <style>
+        .admin-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            color: #555;
+            font-weight: 500;
+        }
+        
+        .data-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .data-section h2 {
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+        
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .data-table th,
+        .data-table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .data-table th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+        }
+        
+        .waitlist-section ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .waitlist-section li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .password-screen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: var(--background);
+        }
+        
+        .password-form {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        
+        .password-form input {
+            width: 100%;
+            padding: 0.75rem;
+            margin: 1rem 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div id="admin-app">
+        <!-- Password screen will be shown first -->
+        <div class="password-screen" id="password-screen">
+            <div class="password-form">
+                <h2>Admin Dashboard</h2>
+                <p>Enter your password to continue</p>
+                <input type="password" id="admin-password" placeholder="Password">
+                <button class="btn primary" id="login-btn">Login</button>
+            </div>
+        </div>
+        
+        <!-- Dashboard content (hidden initially) -->
+        <div class="admin-container hidden" id="dashboard-content">
+            <header>
+                <h1>Muse Garden Admin</h1>
+                <p>Analytics Dashboard</p>
+            </header>
+            
+            <div class="stats-grid" id="stats-grid">
+                <!-- Stats will be populated here -->
+            </div>
+            
+            <div class="data-section">
+                <h2>Actions Overview</h2>
+                <table class="data-table" id="actions-table">
+                    <thead>
+                        <tr>
+                            <th>Action</th>
+                            <th>Count</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Actions data will be populated here -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="data-section">
+                <h2>Page Views</h2>
+                <table class="data-table" id="pages-table">
+                    <thead>
+                        <tr>
+                            <th>Page</th>
+                            <th>Views</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Page view data will be populated here -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="data-section waitlist-section">
+                <h2>Waitlist Subscribers</h2>
+                <ul id="waitlist-list">
+                    <!-- Waitlist emails will be populated here -->
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Simple admin authentication
+            // In a real app, you'd use secure authentication
+            const adminPassword = 'musegarden2025'; // Change this to your preferred password
+            
+            const passwordScreen = document.getElementById('password-screen');
+            const dashboardContent = document.getElementById('dashboard-content');
+            const loginBtn = document.getElementById('login-btn');
+            const passwordInput = document.getElementById('admin-password');
+            
+            loginBtn.addEventListener('click', () => {
+                if (passwordInput.value === adminPassword) {
+                    passwordScreen.classList.add('hidden');
+                    dashboardContent.classList.remove('hidden');
+                    loadDashboardData();
+                } else {
+                    alert('Incorrect password');
+                }
+            });
+            
+            passwordInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    loginBtn.click();
+                }
+            });
+            
+            function loadDashboardData() {
+                // Load analytics data
+                if (window.analytics) {
+                    const report = window.analytics.getReport();
+                    populateStats(report);
+                    populateActionTable(report.actions);
+                    populatePageTable(report.pageViews);
+                } else {
+                    // If analytics doesn't exist yet (unlikely), create it
+                    window.analytics = new SimpleAnalytics();
+                    loadDashboardData();
+                }
+                
+                // Load waitlist data
+                const waitlistEmails = JSON.parse(localStorage.getItem('muse-garden-waitlist') || '[]');
+                populateWaitlist(waitlistEmails);
+            }
+            
+            function populateStats(report) {
+                const statsGrid = document.getElementById('stats-grid');
+                
+                const stats = [
+                    { label: 'Total Visits', value: report.totalVisits },
+                    { label: 'Ideas Generated', value: report.actions.ideasGenerated },
+                    { label: 'Ideas Saved', value: report.actions.ideasSaved },
+                    { label: 'Conversion Rate', value: report.conversionRate.toFixed(1) + '%' },
+                    { label: 'Waitlist Joins', value: report.actions.waitlistJoins },
+                    { label: 'Days Active', value: report.daysSinceFirstVisit }
+                ];
+                
+                statsGrid.innerHTML = '';
+                stats.forEach(stat => {
+                    statsGrid.innerHTML += `
+                        <div class="stat-card">
+                            <div class="stat-value">${stat.value}</div>
+                            <div class="stat-label">${stat.label}</div>
+                        </div>
+                    `;
+                });
+            }
+            
+            function populateActionTable(actions) {
+                const actionsTable = document.getElementById('actions-table').querySelector('tbody');
+                actionsTable.innerHTML = '';
+                
+                for (const [action, count] of Object.entries(actions)) {
+                    actionsTable.innerHTML += `
+                        <tr>
+                            <td>${formatActionName(action)}</td>
+                            <td>${count}</td>
+                        </tr>
+                    `;
+                }
+            }
+            
+            function populatePageTable(pageViews) {
+                const pagesTable = document.getElementById('pages-table').querySelector('tbody');
+                pagesTable.innerHTML = '';
+                
+                for (const [page, count] of Object.entries(pageViews)) {
+                    pagesTable.innerHTML += `
+                        <tr>
+                            <td>${formatPageName(page)}</td>
+                            <td>${count}</td>
+                        </tr>
+                    `;
+                }
+            }
+            
+            function populateWaitlist(emails) {
+                const waitlistList = document.getElementById('waitlist-list');
+                waitlistList.innerHTML = '';
+                
+                if (emails.length === 0) {
+                    waitlistList.innerHTML = '<li>No subscribers yet</li>';
+                    return;
+                }
+                
+                emails.forEach(email => {
+                    waitlistList.innerHTML += `<li>${email}</li>`;
+                });
+            }
+            
+            function formatActionName(action) {
+                return action
+                    .replace(/([A-Z])/g, ' $1') // Add space before capital letters
+                    .replace(/^./, str => str.toUpperCase()); // Capitalize first letter
+            }
+            
+            function formatPageName(page) {
+                switch (page) {
+                    case 'home': return 'Landing Page';
+                    case 'generator': return 'Idea Generator';
+                    case 'blog': return 'Blog';
+                    default: return page;
+                }
+            }
+        });
+    </script>
+    
+    <script src="public/js/analytics.js"></script>
+</body>
+</html>

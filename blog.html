@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - Muse Garden</title>
+    <meta name="description" content="Tips and insights on business idea generation, validation, and entrepreneurship.">
+    <link rel="stylesheet" href="public/css/style.css">
+    <link rel="stylesheet" href="public/css/landing.css">
+    <style>
+        .blog-header {
+            background: linear-gradient(135deg, var(--primary), #2c4060);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+        
+        .blog-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+        
+        .blog-list {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .blog-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        }
+        
+        .blog-image {
+            height: 200px;
+            background-color: #ddd;
+            background-position: center;
+            background-size: cover;
+        }
+        
+        .blog-content {
+            padding: 1.5rem;
+        }
+        
+        .blog-date {
+            font-size: 0.9rem;
+            color: #777;
+            margin-bottom: 0.5rem;
+        }
+        
+        .blog-title {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .blog-excerpt {
+            margin-bottom: 1.5rem;
+            color: #555;
+        }
+        
+        .read-more {
+            color: var(--accent);
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .read-more:hover {
+            text-decoration: underline;
+        }
+        
+        .nav-bar {
+            display: flex;
+            gap: 1.5rem;
+            padding: 1rem 2rem;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav-bar">
+        <a href="landing.html" class="nav-link">Home</a>
+        <a href="index.html" class="nav-link">Idea Generator</a>
+        <a href="blog.html" class="nav-link">Blog</a>
+    </nav>
+    
+    <header class="blog-header">
+        <h1>Muse Garden Blog</h1>
+        <p>Insights and strategies for turning great ideas into successful ventures</p>
+    </header>
+    
+    <div class="blog-container">
+        <div class="blog-list">
+            <article class="blog-card">
+                <div class="blog-image" style="background-color: #f0f4f9;"></div>
+                <div class="blog-content">
+                    <div class="blog-date">April 3, 2025</div>
+                    <h2 class="blog-title">5 Ways to Validate Your Business Idea Without Building Anything</h2>
+                    <p class="blog-excerpt">Validation is critical before investing significant resources into your idea. Learn how to test market demand through simple, cost-effective methods that can save you time and money.</p>
+                    <a href="#" class="read-more">Read More →</a>
+                </div>
+            </article>
+            
+            <article class="blog-card">
+                <div class="blog-image" style="background-color: #e6f7e6;"></div>
+                <div class="blog-content">
+                    <div class="blog-date">March 27, 2025</div>
+                    <h2 class="blog-title">The Psychology of Innovation: Breaking Through Creative Blocks</h2>
+                    <p class="blog-excerpt">Creative blocks affect even the most innovative minds. Discover science-backed techniques for overcoming mental barriers and generating breakthrough ideas consistently.</p>
+                    <a href="#" class="read-more">Read More →</a>
+                </div>
+            </article>
+            
+            <article class="blog-card">
+                <div class="blog-image" style="background-color: #f7f2e6;"></div>
+                <div class="blog-content">
+                    <div class="blog-date">March 15, 2025</div>
+                    <h2 class="blog-title">From Idea to Income: Turning Side Projects into Revenue Streams</h2>
+                    <p class="blog-excerpt">Not every side project needs venture capital to become profitable. Learn how successful entrepreneurs have transformed passion projects into sustainable income sources.</p>
+                    <a href="#" class="read-more">Read More →</a>
+                </div>
+            </article>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="logo">Muse Garden</div>
+                <p>&copy; 2025 Muse Garden. All rights reserved.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link">Twitter</a>
+                    <a href="#" class="social-link">LinkedIn</a>
+                    <a href="#" class="social-link">Product Hunt</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="public/js/analytics.js"></script>
+</body>
+</html>

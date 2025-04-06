@@ -296,3 +296,65 @@ main {
 .nav-link:hover {
     color: var(--accent);
 }
+/* Social Sharing */
+.share-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid #eee;
+}
+
+.share-text {
+    font-size: 0.9rem;
+    color: #777;
+    margin-right: 0.5rem;
+}
+
+.share-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.share-btn:hover {
+    transform: translateY(-2px);
+}
+
+.share-btn.twitter {
+    background-color: #1DA1F2;
+    color: white;
+}
+
+.share-btn.linkedin {
+    background-color: #0077B5;
+    color: white;
+}
+
+.share-btn.facebook {
+    background-color: #4267B2;
+    color: white;
+}
+
+.share-btn.email {
+    background-color: #EA4335;
+    color: white;
+}
+
+.share-icon {
+    font-weight: bold;
+}
+
+.idea-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+}

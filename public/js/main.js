@@ -1,3 +1,6 @@
+// Initialize the social share functionality
+const socialShare = new SocialShare();
+
 document.addEventListener('DOMContentLoaded', () => {
     console.log('Muse Garden is awakening...');
     
@@ -123,8 +126,17 @@ function generatePrompt() {
             <h3>Creative Spark ✨</h3>
             <p><strong>${prompt}</strong></p>
             <p class="twist"><em>${twist}</em></p>
+        <div class="idea-actions">
+            <div id="share-container"></div>
         </div>
+    </div>
     `;
+
+        // Add share buttons
+        const shareContainer = document.getElementById('share-container');
+        const shareText = `Check out this business idea: ${prompt}`;
+        const shareUrl = window.location.href;
+        shareContainer.appendChild(socialShare.createShareBar(shareText, shareUrl));
     
     resultContainer.classList.remove('hidden');
     saveBtn.classList.remove('hidden');
@@ -259,9 +271,15 @@ function loadSavedIdeas() {
     let ideasHTML = '<h2>Your Idea Garden</h2>';
     
     savedIdeas.forEach(idea => {
+        // Extract the idea text from the HTML content for sharing
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = idea.content;
+        const ideaText = tempDiv.querySelector('p strong')?.textContent || 'Check out this business idea';
+        
         ideasHTML += `
             <div class="idea-card saved-idea" data-id="${idea.id}">
                 ${idea.content}
+                <div class="share-container" id="share-${idea.id}"></div>
                 ${idea.hasAnalysis ? 
                     `<button class="view-analysis-btn" data-id="${idea.id}">View Analysis</button>
                     <div class="saved-analysis hidden" id="analysis-${idea.id}">${idea.analysis}</div>` 
@@ -275,6 +293,18 @@ function loadSavedIdeas() {
     });
     
     savedIdeasContainer.innerHTML = ideasHTML;
+    
+    // Add share buttons to each saved idea
+    savedIdeas.forEach(idea => {
+        const shareContainer = document.getElementById(`share-${idea.id}`);
+        if (shareContainer) {
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = idea.content;
+            const ideaText = tempDiv.querySelector('p strong')?.textContent || 'Check out this business idea';
+            const shareUrl = window.location.href;
+            shareContainer.appendChild(socialShare.createShareBar(ideaText, shareUrl));
+        }
+    });
     
     // Add event listeners to delete buttons
     document.querySelectorAll('.delete-idea').forEach(button => {
