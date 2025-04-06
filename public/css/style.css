@@ -1,0 +1,282 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary: #4a6fa5;
+    --secondary: #7db46c;
+    --background: #f7f9fc;
+    --text: #333;
+    --accent: #e2b33c;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--background);
+    color: var(--text);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+header h1 {
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+}
+
+footer {
+    text-align: center;
+    margin-top: 2rem;
+    font-size: 0.9rem;
+    color: #777;
+}
+
+main {
+    background-color: white;
+    border-radius: 8px;
+    padding: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    min-height: 400px;
+}
+.prompt-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.controls {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn.primary {
+    background-color: var(--primary);
+    color: white;
+}
+
+.btn.primary:hover {
+    background-color: #3d5d8a;
+}
+
+.btn.secondary {
+    background-color: var(--secondary);
+    color: white;
+}
+
+.btn.secondary:hover {
+    background-color: #69a35b;
+}
+
+.result-container {
+    margin-top: 1.5rem;
+    padding: 1.5rem;
+    border-radius: 8px;
+    background-color: #f0f4f9;
+    transition: all 0.3s ease;
+}
+
+.hidden {
+    display: none;
+}
+
+.idea-card {
+    padding: 1rem;
+    background: white;
+    border-left: 4px solid var(--accent);
+    margin-bottom: 1rem;
+    border-radius: 0 4px 4px 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.idea-card h3 {
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+}
+.idea-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+    font-size: 0.85rem;
+    color: #777;
+}
+
+.delete-idea {
+    background: none;
+    border: none;
+    color: #d35656;
+    cursor: pointer;
+    font-size: 0.85rem;
+}
+
+.delete-idea:hover {
+    text-decoration: underline;
+}
+
+.twist {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+#saved-ideas {
+    margin-top: 2rem;
+}
+
+#saved-ideas h2 {
+    margin-bottom: 1rem;
+    color: var(--secondary);
+}
+/* Analysis styling */
+.analysis-container {
+    margin-top: 1.5rem;
+}
+
+.analysis-card {
+    background: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.btn.accent {
+    background-color: var(--accent);
+    color: white;
+}
+
+.btn.accent:hover {
+    background-color: #c99a33;
+}
+
+.overall-score {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 1rem 0;
+}
+
+.score-circle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 0.5rem;
+}
+
+.high-score {
+    background: linear-gradient(135deg, #4caf50, #2e7d32);
+}
+
+.medium-score {
+    background: linear-gradient(135deg, #ff9800, #e65100);
+}
+
+.low-score {
+    background: linear-gradient(135deg, #f44336, #b71c1c);
+}
+
+.score-breakdown {
+    margin: 1.5rem 0;
+}
+
+.score-item {
+    margin-bottom: 0.8rem;
+}
+
+.score-label {
+    font-size: 0.9rem;
+    margin-bottom: 0.3rem;
+    text-transform: capitalize;
+}
+
+.score-bar-container {
+    background-color: #eee;
+    height: 12px;
+    border-radius: 6px;
+    position: relative;
+    overflow: hidden;
+}
+
+.score-bar {
+    height: 100%;
+    border-radius: 6px;
+}
+
+.score-bar.high {
+    background-color: #4caf50;
+}
+
+.score-bar.medium {
+    background-color: #ff9800;
+}
+
+.score-bar.low {
+    background-color: #f44336;
+}
+
+.score-value {
+    position: absolute;
+    right: 5px;
+    top: -1px;
+    font-size: 0.8rem;
+}
+
+.feedback-list, .recommendations-list {
+    padding-left: 1.5rem;
+    margin: 1rem 0;
+}
+
+.feedback-list li, .recommendations-list li {
+    margin-bottom: 0.5rem;
+}
+
+.view-analysis-btn {
+    display: block;
+    margin: 1rem 0;
+    background: none;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.view-analysis-btn:hover {
+    background-color: var(--accent);
+    color: white;
+}
+
+.saved-analysis {
+    margin-top: 1rem;
+    padding: 1rem;
+    background-color: #f9f9f9;
+    border-radius: 4px;
+    border-left: 3px solid var(--accent);
+}
