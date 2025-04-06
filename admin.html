@@ -106,6 +106,24 @@
             border-radius: 4px;
         }
     </style>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#4a6fa5">
+    <link rel="apple-touch-icon" href="public/images/icon-192.png">
+    <script>
+      // Register service worker for PWA support
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/service-worker.js')
+            .then(registration => {
+              console.log('ServiceWorker registration successful with scope: ', registration.scope);
+            })
+            .catch(error => {
+              console.log('ServiceWorker registration failed: ', error);
+            });
+        });
+      }
+    </script>
+    <link rel="stylesheet" href="public/css/mobile.css">
 </head>
 <body>
     <div id="admin-app">
@@ -297,5 +315,6 @@
     </script>
     
     <script src="public/js/analytics.js"></script>
+    <script src="public/js/pwa-installer.js"></script>
 </body>
 </html>

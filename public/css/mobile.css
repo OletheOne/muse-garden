@@ -1,0 +1,106 @@
+/* Mobile-specific styles */
+@media (max-width: 768px) {
+    /* Landing page */
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+    
+    .tagline {
+        font-size: 1.2rem;
+    }
+    
+    .feature-grid, .testimonial-container, .pricing-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .pricing-card.featured {
+        transform: none;
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+    }
+    
+    /* Idea generator */
+    .controls {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.75rem;
+    }
+    
+    .btn {
+        width: 100%;
+    }
+    
+    .analysis-card .overall-score {
+        flex-direction: row;
+        align-items: center;
+        gap: 1rem;
+    }
+    
+    .idea-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .export-dropdown-btn, .view-analysis-btn {
+        width: 100%;
+        margin-top: 0.5rem;
+    }
+    
+    /* Blog */
+    .blog-header {
+        padding: 2rem 1rem;
+    }
+    
+    .blog-container {
+        padding: 1.5rem 1rem;
+    }
+    
+    /* Navigation */
+    .nav-bar {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Smaller screens */
+    .hero h1 {
+        font-size: 2rem;
+    }
+    
+    .container {
+        padding: 1rem;
+    }
+    
+    main {
+        padding: 1rem;
+    }
+    
+    .idea-card {
+        padding: 1rem;
+    }
+    
+    .share-bar {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+    
+    .share-text {
+        width: 100%;
+        text-align: center;
+        margin-bottom: 0.5rem;
+    }
+    
+    /* Modal adjustments */
+    .modal-content {
+        width: 95%;
+        padding: 1.5rem 1rem;
+    }
+    
+    .tag-options {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

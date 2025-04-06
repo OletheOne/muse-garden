@@ -1,5 +1,5 @@
 // Initialize the social share functionality
-const socialShare = new SocialShare();
+// Removed duplicate declaration of 'socialShare'
 
 document.addEventListener('DOMContentLoaded', () => {
     console.log('Muse Garden is awakening...');
@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Initialize the analyzer
-const analyzer = new IdeaAnalyzer();
+// Removed duplicate declaration of 'analyzer'
 
 function initApp() {
     const app = document.getElementById('app');
@@ -225,36 +225,88 @@ function getScoreClass(score) {
     return 'low-score';
 }
 
-// Save the current idea
+// Initialize modules
+const analyzer = new IdeaAnalyzer();
+const socialShare = new SocialShare();
+const ideaExporter = new IdeaExporter();
+const ideaOrganizer = new IdeaOrganizer();
+
+// When saving an idea, add the organization features:
 function saveIdea() {
     const currentIdea = document.getElementById('current-idea');
     const analysisContainer = document.getElementById('analysis');
     
     if (!currentIdea) return;
     
-    const savedIdeasContainer = document.getElementById('saved-ideas');
-    const savedIdeas = JSON.parse(localStorage.getItem('muse-garden-ideas') || '[]');
+    // Create organization UI
+    const organizeModal = document.createElement('div');
+    organizeModal.className = 'modal';
+    organizeModal.innerHTML = `
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Organize Your Idea</h2>
+            <p>Add a category and tags to help organize your idea garden.</p>
+            <div id="category-container"></div>
+            <div id="tags-container"></div>
+            <button id="save-organized-idea" class="btn primary" style="margin-top: 1rem;">Save Idea</button>
+        </div>
+    `;
     
-    // Check if we have analysis
-    const hasAnalysis = !analysisContainer.classList.contains('hidden');
+    document.body.appendChild(organizeModal);
     
-    // Add a timestamp and ID to the idea
-    const ideaData = {
-        id: Date.now(),
-        content: currentIdea.innerHTML,
-        date: new Date().toLocaleDateString(),
-        hasAnalysis: hasAnalysis,
-        analysis: hasAnalysis ? analysisContainer.innerHTML : null
-    };
+    // Add category selector
+    const categoryContainer = document.getElementById('category-container');
+    categoryContainer.appendChild(ideaOrganizer.createCategorySelector());
     
-    savedIdeas.push(ideaData);
-    localStorage.setItem('muse-garden-ideas', JSON.stringify(savedIdeas));
+    // Add tag selector
+    const tagsContainer = document.getElementById('tags-container');
+    tagsContainer.appendChild(ideaOrganizer.createTagSelector());
     
-    // Update the display
-    loadSavedIdeas();
+    // Event listeners
+    document.querySelector('.close-modal').addEventListener('click', () => {
+        organizeModal.remove();
+    });
+    
+    document.getElementById('save-organized-idea').addEventListener('click', () => {
+        const savedIdeasContainer = document.getElementById('saved-ideas');
+        const savedIdeas = JSON.parse(localStorage.getItem('muse-garden-ideas') || '[]');
+        
+        // Get selected category and tags
+        const category = ideaOrganizer.getSelectedCategory();
+        const tags = ideaOrganizer.getSelectedTags();
+        
+        // Check if we have analysis
+        const hasAnalysis = !analysisContainer.classList.contains('hidden');
+        
+        // Extract idea text for search functionality
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = currentIdea.innerHTML;
+        const ideaText = tempDiv.querySelector('p strong')?.textContent || '';
+        
+        // Add a timestamp and ID to the idea
+        const ideaData = {
+            id: Date.now(),
+            content: currentIdea.innerHTML,
+            date: new Date().toLocaleDateString(),
+            hasAnalysis: hasAnalysis,
+            analysis: hasAnalysis ? analysisContainer.innerHTML : null,
+            category: category,
+            tags: tags,
+            searchText: ideaText.toLowerCase()
+        };
+        
+        savedIdeas.push(ideaData);
+        localStorage.setItem('muse-garden-ideas', JSON.stringify(savedIdeas));
+        
+        // Remove the modal
+        organizeModal.remove();
+        
+        // Update the display
+        loadSavedIdeas();
+    });
 }
 
-// Load saved ideas from localStorage
+// Also update loadSavedIdeas to show categories and tags
 function loadSavedIdeas() {
     const savedIdeasContainer = document.getElementById('saved-ideas');
     const savedIdeas = JSON.parse(localStorage.getItem('muse-garden-ideas') || '[]');
@@ -268,18 +320,44 @@ function loadSavedIdeas() {
     savedIdeas.sort((a, b) => b.id - a.id);
     
     // Create HTML for saved ideas
-    let ideasHTML = '<h2>Your Idea Garden</h2>';
+    let ideasHTML = `
+        <h2>Your Idea Garden</h2>
+        <div class="search-container">
+            <input type="text" id="idea-search" placeholder="Search your ideas..." class="search-input">
+        </div>
+    `;
+    
+    // Add filters
+    const filtersContainer = ideaOrganizer.createFilterUI();
+    ideasHTML += filtersContainer.outerHTML;
     
     savedIdeas.forEach(idea => {
-        // Extract the idea text from the HTML content for sharing
+        // Extract the idea text for sharing
         const tempDiv = document.createElement('div');
         tempDiv.innerHTML = idea.content;
         const ideaText = tempDiv.querySelector('p strong')?.textContent || 'Check out this business idea';
         
         ideasHTML += `
-            <div class="idea-card saved-idea" data-id="${idea.id}">
+            <div class="idea-card saved-idea" data-id="${idea.id}" data-category="${idea.category || ''}" data-tags="${idea.tags ? idea.tags.join(',') : ''}">
                 ${idea.content}
                 <div class="share-container" id="share-${idea.id}"></div>
+                <div class="export-container" id="export-${idea.id}"></div>
+                ${idea.category || (idea.tags && idea.tags.length > 0) ? `
+                    <div class="organize-container">
+                        ${idea.category ? `
+                            <div class="category-container">
+                                <span>Category: </span>
+                                <span class="idea-category">${idea.category}</span>
+                            </div>
+                        ` : ''}
+                        ${idea.tags && idea.tags.length > 0 ? `
+                            <div class="tag-container">
+                                <span>Tags: </span>
+                                ${idea.tags.map(tag => `<span class="idea-tag">${tag}</span>`).join('')}
+                            </div>
+                        ` : ''}
+                    </div>
+                ` : ''}
                 ${idea.hasAnalysis ? 
                     `<button class="view-analysis-btn" data-id="${idea.id}">View Analysis</button>
                     <div class="saved-analysis hidden" id="analysis-${idea.id}">${idea.analysis}</div>` 
@@ -294,6 +372,41 @@ function loadSavedIdeas() {
     
     savedIdeasContainer.innerHTML = ideasHTML;
     
+    // Add event listeners for filters
+    document.querySelectorAll('.filter-option').forEach(option => {
+        option.addEventListener('click', () => {
+            // Rest of the filter functionality is handled in organizer.js
+        });
+    });
+    
+    // Add search functionality
+    const searchInput = document.getElementById('idea-search');
+    if (searchInput) {
+        searchInput.addEventListener('input', () => {
+            const searchText = searchInput.value.toLowerCase();
+            
+            document.querySelectorAll('.saved-idea').forEach(ideaCard => {
+                const id = parseInt(ideaCard.getAttribute('data-id'));
+                const idea = savedIdeas.find(i => i.id === id);
+                
+                if (!idea) return;
+                
+                // Search in title, description, and category/tags
+                const searchable = [
+                    idea.searchText || '',
+                    idea.category || '',
+                    ...(idea.tags || [])
+                ].join(' ').toLowerCase();
+                
+                if (searchText === '' || searchable.includes(searchText)) {
+                    ideaCard.style.display = 'block';
+                } else {
+                    ideaCard.style.display = 'none';
+                }
+            });
+        });
+    }
+    
     // Add share buttons to each saved idea
     savedIdeas.forEach(idea => {
         const shareContainer = document.getElementById(`share-${idea.id}`);
@@ -303,6 +416,12 @@ function loadSavedIdeas() {
             const ideaText = tempDiv.querySelector('p strong')?.textContent || 'Check out this business idea';
             const shareUrl = window.location.href;
             shareContainer.appendChild(socialShare.createShareBar(ideaText, shareUrl));
+        }
+        
+        // Add export functionality
+        const exportContainer = document.getElementById(`export-${idea.id}`);
+        if (exportContainer) {
+            exportContainer.appendChild(ideaExporter.createExportDropdown(idea));
         }
     });
     
