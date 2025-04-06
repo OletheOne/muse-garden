@@ -280,3 +280,19 @@ main {
     border-radius: 4px;
     border-left: 3px solid var(--accent);
 }
+.nav-bar {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 1rem;
+}
+
+.nav-link {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: var(--accent);
+}

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muse Garden - Cultivate Your Business Ideas</title>
+    <link rel="stylesheet" href="public/css/style.css">
+    <link rel="stylesheet" href="public/css/landing.css">
+    <meta name="description" content="Muse Garden - Generate and analyze creative business ideas. Turn inspiration into viable business opportunities.">
+    <meta property="og:title" content="Muse Garden - Business Idea Generator">
+    <meta property="og:description" content="Generate, analyze, and refine business ideas with intelligent feedback.">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+</head>
+<body class="landing-page">
+    <header class="hero">
+        <div class="hero-content">
+            <h1>Muse Garden</h1>
+            <p class="tagline">Cultivate brilliant ideas, analyze their potential, grow your success</p>
+            <div class="cta-buttons">
+                <a href="index.html" class="cta-button primary">Start Generating Ideas</a>
+                <a href="#features" class="cta-button secondary">Learn More</a>
+            </div>
+        </div>
+    </header>
+
+    <section id="features" class="features">
+        <div class="container">
+            <h2>How Muse Garden Helps You Succeed</h2>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">💡</div>
+                    <h3>Inspiration On Demand</h3>
+                    <p>Never face a creative block again. Generate fresh business ideas tailored to various industries and needs.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Intelligent Analysis</h3>
+                    <p>Evaluate the potential of each idea with our smart analysis system that scores market potential, complexity, originality, and more.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🌱</div>
+                    <h3>Idea Garden</h3>
+                    <p>Save your favorite ideas and watch them grow as you refine them based on personalized recommendations.</p>
+                </div>
+                
+                <div class="feature-card premium-card">
+                    <div class="feature-icon">⭐</div>
+                    <h3>Premium Features Coming Soon</h3>
+                    <p>Advanced AI-powered idea refinement, export capabilities, and collaboration tools.</p>
+                    <button class="waitlist-btn">Join Waitlist</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="testimonials">
+        <div class="container">
+            <h2>What Early Users Are Saying</h2>
+            
+            <div class="testimonial-container">
+                <div class="testimonial">
+                    <p class="quote">"Muse Garden helped me break through my creative block and find a viable business idea in less than an hour."</p>
+                    <p class="author">- Alex P., Startup Founder</p>
+                </div>
+                
+                <div class="testimonial">
+                    <p class="quote">"The analysis feature saved me from pursuing a low-potential idea and guided me toward something much better."</p>
+                    <p class="author">- Jamie C., Product Manager</p>
+                </div>
+                
+                <div class="testimonial">
+                    <p class="quote">"I use Muse Garden every week in our team's brainstorming sessions. It's become an essential tool."</p>
+                    <p class="author">- Taylor R., Innovation Lead</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="pricing">
+        <div class="container">
+            <h2>Start Growing Your Ideas Today</h2>
+            
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>Free</h3>
+                    <p class="price">$0</p>
+                    <ul class="features-list">
+                        <li>Unlimited idea generation</li>
+                        <li>Basic idea analysis</li>
+                        <li>Save up to 10 ideas</li>
+                    </ul>
+                    <a href="index.html" class="cta-button primary">Get Started</a>
+                </div>
+                
+                <div class="pricing-card featured">
+                    <div class="badge">Coming Soon</div>
+                    <h3>Pro</h3>
+                    <p class="price">$9.99/month</p>
+                    <ul class="features-list">
+                        <li>Advanced AI-powered analysis</li>
+                        <li>Unlimited saved ideas</li>
+                        <li>Export to PDF/PPT</li>
+                        <li>Priority support</li>
+                    </ul>
+                    <button class="waitlist-btn">Join Waitlist</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="logo">Muse Garden</div>
+                <p>&copy; 2025 Muse Garden. All rights reserved.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link">Twitter</a>
+                    <a href="#" class="social-link">LinkedIn</a>
+                    <a href="#" class="social-link">Product Hunt</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Modal for waitlist -->
+    <div id="waitlist-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Join the Waitlist</h2>
+            <p>Be the first to access premium features when they launch.</p>
+            <form id="waitlist-form">
+                <input type="email" placeholder="Your email" required>
+                <button type="submit" class="cta-button primary">Join Waitlist</button>
+            </form>
+        </div>
+    </div>
+    
+    <script>
+        // Simple modal functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            const modal = document.getElementById('waitlist-modal');
+            const waitlistBtns = document.querySelectorAll('.waitlist-btn');
+            const closeModal = document.querySelector('.close-modal');
+            const waitlistForm = document.getElementById('waitlist-form');
+            
+            waitlistBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    modal.classList.remove('hidden');
+                });
+            });
+            
+            closeModal.addEventListener('click', () => {
+                modal.classList.add('hidden');
+            });
+            
+            window.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.classList.add('hidden');
+                }
+            });
+            
+            waitlistForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const email = waitlistForm.querySelector('input[type="email"]').value;
+                
+                // In a real implementation, you would send this to your backend
+                console.log('Added to waitlist:', email);
+                
+                // Show success message
+                waitlistForm.innerHTML = '<p class="success-message">Thanks for joining the waitlist! We\'ll be in touch soon.</p>';
+                
+                // Close modal after 3 seconds
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                    // Reset form for next time
+                    waitlistForm.innerHTML = `
+                        <input type="email" placeholder="Your email" required>
+                        <button type="submit" class="cta-button primary">Join Waitlist</button>
+                    `;
+                }, 3000);
+            });
+        });
+    </script>
+</body>
+</html>
