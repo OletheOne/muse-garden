@@ -29,6 +29,14 @@
     }
     </script>
     <link rel="stylesheet" href="public/css/mobile.css">
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+
+    <!-- Firebase Config -->
+    <script src="public/js/firebase-config.js"></script>
 </head>
 <body class="landing-page">
     <header class="hero">
@@ -107,24 +115,38 @@
                     <h3>Free</h3>
                     <p class="price">$0</p>
                     <ul class="features-list">
-                        <li>Unlimited idea generation</li>
+                        <li>Generate up to 10 ideas per day</li>
                         <li>Basic idea analysis</li>
-                        <li>Save up to 10 ideas</li>
+                        <li>Local idea storage</li>
                     </ul>
                     <a href="index.html" class="cta-button primary">Get Started</a>
                 </div>
                 
                 <div class="pricing-card featured">
-                    <div class="badge">Coming Soon</div>
+                    <div class="badge">Most Popular</div>
                     <h3>Pro</h3>
                     <p class="price">$9.99/month</p>
                     <ul class="features-list">
+                        <li>Unlimited idea generation</li>
                         <li>Advanced AI-powered analysis</li>
-                        <li>Unlimited saved ideas</li>
-                        <li>Export to PDF/PPT</li>
+                        <li>Cloud storage for ideas</li>
+                        <li>Export to PDF/PPT/CSV</li>
                         <li>Priority support</li>
                     </ul>
-                    <button class="waitlist-btn">Join Waitlist</button>
+                    <button class="cta-button primary upgrade-btn">Upgrade to Pro</button>
+                </div>
+                
+                <div class="pricing-card">
+                    <h3>Business</h3>
+                    <p class="price">$29.99/month</p>
+                    <ul class="features-list">
+                        <li>Everything in Pro</li>
+                        <li>Team collaboration</li>
+                        <li>Custom branding</li>
+                        <li>Advanced export options</li>
+                        <li>API access</li>
+                    </ul>
+                    <button class="cta-button primary upgrade-btn">Upgrade to Business</button>
                 </div>
             </div>
         </div>
@@ -206,5 +228,7 @@
     <script src="public/js/waitlist.js"></script>
     <script src="public/js/analytics.js"></script>
     <script src="public/js/pwa-installer.js"></script>
+    <script src="public/js/auth.js"></script>
+    <script src="public/js/subscription.js"></script>
 </body>
 </html>

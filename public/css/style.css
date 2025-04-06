@@ -577,3 +577,245 @@ main {
         gap: 1rem;
     }
 }
+/* Authentication Styles */
+.auth-buttons {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-left: auto;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.user-display {
+    font-weight: 500;
+}
+
+.sign-in-btn, .sign-out-btn {
+    background: none;
+    border: 1px solid var(--primary);
+    color: var(--primary);
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.sign-in-btn:hover, .sign-out-btn:hover {
+    background-color: #f0f4f9;
+}
+
+/* Auth modals */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.form-group small {
+    display: block;
+    margin-top: 0.25rem;
+    color: #777;
+    font-size: 0.85rem;
+}
+
+.form-error, .form-message.error {
+    color: #d9534f;
+    margin: 1rem 0;
+    padding: 0.5rem;
+    background-color: rgba(217, 83, 79, 0.1);
+    border-radius: 4px;
+}
+
+.form-message.success {
+    color: #5cb85c;
+    margin: 1rem 0;
+    padding: 0.5rem;
+    background-color: rgba(92, 184, 92, 0.1);
+    border-radius: 4px;
+}
+
+.auth-links {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.auth-links a {
+    color: var(--primary);
+    text-decoration: none;
+}
+
+.auth-links a:hover {
+    text-decoration: underline;
+}
+
+/* Conditional visibility */
+.user-signed-in .auth-required {
+    display: block;
+}
+
+.user-signed-in .auth-not-required {
+    display: none;
+}
+
+.user-signed-out .auth-required {
+    display: none;
+}
+
+.user-signed-out .auth-not-required {
+    display: block;
+}
+/* Subscription styles */
+.subscription-content {
+    max-width: 900px;
+}
+
+.subscription-plans {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+}
+
+.plan-card {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 2rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    text-align: center;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.plan-card.featured {
+    border: 2px solid var(--accent);
+    transform: scale(1.05);
+    z-index: 1;
+    background-color: white;
+}
+
+.plan-price {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin: 1rem 0;
+    color: var(--primary);
+}
+
+.plan-features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2rem 0;
+    text-align: left;
+    flex-grow: 1;
+}
+
+.plan-features li {
+    padding: 0.5rem 0;
+    position: relative;
+    padding-left: 1.5rem;
+}
+
+.plan-features li:before {
+    content: "✓";
+    color: var(--secondary);
+    position: absolute;
+    left: 0;
+}
+
+.subscription-footer {
+    text-align: center;
+    margin-top: 1rem;
+    color: #777;
+}
+
+.subscription-badge {
+    display: inline-block;
+    padding: 0.2rem 0.5rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-left: 0.5rem;
+}
+
+.subscription-badge.pro {
+    background-color: var(--accent);
+    color: white;
+}
+
+.subscription-badge.business {
+    background-color: #6c5ce7;
+    color: white;
+}
+
+/* Premium feature styles */
+.premium-feature {
+    position: relative;
+}
+
+.premium-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.8);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    padding: 1rem;
+    text-align: center;
+}
+
+.premium-message {
+    margin-bottom: 1rem;
+    font-weight: 600;
+    color: var(--primary);
+}
+
+/* Limit counters */
+.usage-limits {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: #777;
+    margin-bottom: 1rem;
+}
+
+.limit-counter {
+    background-color: #f0f4f9;
+    padding: 0.2rem 0.5rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+}
+
+.limit-counter.warning {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.limit-counter.danger {
+    background-color: #f8d7da;
+    color: #721c24;
+}

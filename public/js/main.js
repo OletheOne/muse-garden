@@ -231,7 +231,7 @@ const socialShare = new SocialShare();
 const ideaExporter = new IdeaExporter();
 const ideaOrganizer = new IdeaOrganizer();
 
-// When saving an idea, add the organization features:
+// Save an idea
 function saveIdea() {
     const currentIdea = document.getElementById('current-idea');
     const analysisContainer = document.getElementById('analysis');
@@ -295,14 +295,45 @@ function saveIdea() {
             searchText: ideaText.toLowerCase()
         };
         
-        savedIdeas.push(ideaData);
-        localStorage.setItem('muse-garden-ideas', JSON.stringify(savedIdeas));
-        
-        // Remove the modal
-        organizeModal.remove();
-        
-        // Update the display
-        loadSavedIdeas();
+        // Check if user is signed in
+        if (firebase.auth().currentUser) {
+            // Save to Firestore
+            saveIdeaToFirestore(ideaData)
+                .then(firestoreId => {
+                    // Update local ID with Firestore ID
+                    ideaData.firestoreId = firestoreId;
+                    savedIdeas.push(ideaData);
+                    localStorage.setItem('muse-garden-ideas', JSON.stringify(savedIdeas));
+                    
+                    // Remove the modal
+                    organizeModal.remove();
+                    
+                    // Update the display
+                    loadSavedIdeas();
+                })
+                .catch(error => {
+                    console.error('Error saving to Firestore:', error);
+                    // Fall back to local storage
+                    savedIdeas.push(ideaData);
+                    localStorage.setItem('muse-garden-ideas', JSON.stringify(savedIdeas));
+                    
+                    // Remove the modal
+                    organizeModal.remove();
+                    
+                    // Update the display
+                    loadSavedIdeas();
+                });
+        } else {
+            // Just save locally
+            savedIdeas.push(ideaData);
+            localStorage.setItem('muse-garden-ideas', JSON.stringify(savedIdeas));
+            
+            // Remove the modal
+            organizeModal.remove();
+            
+            // Update the display
+            loadSavedIdeas();
+        }
     });
 }
 
@@ -448,8 +479,17 @@ function loadSavedIdeas() {
 // Delete an idea
 function deleteIdea(ideaId) {
     let savedIdeas = JSON.parse(localStorage.getItem('muse-garden-ideas') || '[]');
+    const ideaToDelete = savedIdeas.find(idea => idea.id === ideaId);
+    
+    // Remove from array
     savedIdeas = savedIdeas.filter(idea => idea.id !== ideaId);
     localStorage.setItem('muse-garden-ideas', JSON.stringify(savedIdeas));
+    
+    // If user is signed in and idea has a Firestore ID, delete from Firestore
+    if (firebase.auth().currentUser && ideaToDelete && ideaToDelete.firestoreId) {
+        deleteIdeaFromFirestore(ideaToDelete.firestoreId)
+            .catch(error => console.error('Error deleting from Firestore:', error));
+    }
     
     // Update the display
     loadSavedIdeas();
